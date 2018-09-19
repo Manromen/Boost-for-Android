@@ -1,0 +1,73 @@
+### project configuration
+
+# C++ project
+language: cpp
+
+# Use Ubuntu 14.04 (Trusty)
+dist: trusty
+sudo: required
+group: edge
+
+branches:
+  only:
+    - travis
+
+git:
+    submodules: false
+
+before_install:
+
+  # Download Google Drive Downloader
+  - curl -OL https://gist.githubusercontent.com/Manromen/4e4cf28ddf5bf2e4ee5cc2dfe4055952/raw/77d59731d3523f51d312254c6fd36427b3ea49b5/googleDriveDownload.sh
+  - chmod +x googleDriveDownload.sh;
+
+  # Install Android NDK from Google Drive
+  - if [ $TRAVIS_ANDROID_NDK_VERSION == r17b ]; then ./googleDriveDownload.sh "1TC5k_qcdZthAjLZOZG50iYdvzHO0n8ck" ; fi
+  - if [ $TRAVIS_ANDROID_NDK_VERSION == r17b ]; then unzip -q -o android-ndk-r17b-linux-x86_64.zip ; fi
+  - if [ $TRAVIS_ANDROID_NDK_VERSION == r18 ]; then ./googleDriveDownload.sh "107fT4NP2YMDyK89xp3l6NRzPnwxrr2HT" ; fi
+  - if [ $TRAVIS_ANDROID_NDK_VERSION == r18 ]; then unzip -q -o android-ndk-r18-linux-x86_64.zip ; fi
+  
+### build matrix
+matrix:
+  include:
+
+    # Boost 1.68.0 with NDK r17b
+    - os: linux
+      env:
+        - TRAVIS_ANDROID_NDK_VERSION=r17b
+        - TRAVIS_BOOST_VERSION=1.68.0
+      addons:
+      apt:
+        sources: ['ubuntu-toolchain-r-test']
+        packages: ['g++-5' ]
+    
+    # Boost 1.68.0 with NDK r18
+    - os: linux
+      env:
+        - TRAVIS_ANDROID_NDK_VERSION=r18
+        - TRAVIS_BOOST_VERSION=1.68.0
+      addons:
+      apt:
+        sources: ['ubuntu-toolchain-r-test']
+        packages: ['g++-5' ]
+
+### build script
+script:
+  # show OS/compiler version
+  - uname -a
+
+  # build
+  - ./travis-build.sh
+
+  # zip result
+  - cd "${TRAVIS_BUILD_DIR}/build"
+  - zip -r "${TRAVIS_BUILD_DIR}/boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_BOOST_VERSION}.zip" include lib
+
+deploy:
+  provider: releases
+  api_key:
+    secure: "PX+2uNPt8gLzs6uMek9ycsKjezQy5Da2rJSMPwZv6SiDt3yQU4LDp/K3VKVhV4y8Uks3FtUati1kYsdz6mzaalUV6mSkFZ+wHa6YR9fWxBYndtiiAuApHX3A3rsbO6j5r0dkG7auKt1iRLZwgE+U/rDNv55j94QEb2Ey7Nvx9Bwcdursin5iO3jleLApGoqOl7cDgVf0V1TylA6H5pdr26cSHDOK5XKwix4zlQ4Bk5gtJ9zT7uEWh+JZQgTUr1t7Q8Dx0KK+Cdce/Kf+qearHJZp/qBhnkp7HMMOjC7qUfU/dr97LZeVpZ6OCsiVS+oj1YzsyGGEiJV9YhnLZa6n+gRctlLbOBFtWKEKbCGXkwWS46aDV10Crziog8hna8UuK7YJ2tTVHV7W/fXQNP9txV5JGH1dvw5/DQebYwB9VTFi34u8k43yQDPgdpTjI7slGaBxNI5hRRE+sRrT9bt/CNx7ARw6V6BbQxIEDbebno/sb+eqd8wiTFEo4J+FvwL7u89oQIni0slu+vZuHeQPLPOu8nOyv61dBVOGZnjSOS8Yz/wRBLx4o1chnLMjciR2pRk3nDE5c+b38YYT6hob/dfaS6Cz0lwqImKK+Y0rLaVuG4nKH4ASm+eKLwdx5aM+vSOKwxpXrLGY79/nhioLh9RYO8xndobzn4PSFYjye9o="
+  file: "boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_BOOST_VERSION}.zip"
+  skip_cleanup: true
+  on:
+    branch: travis
