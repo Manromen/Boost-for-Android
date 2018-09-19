@@ -42,7 +42,7 @@ function restructureOutput()
     cd "${ABSOLUTE_DIR}/build"
 
     # copy header files
-    mkdir "${ABSOLUTE_DIR}/build/include"
+    mkdir -p "${ABSOLUTE_DIR}/build/include"
     mkdir "${ABSOLUTE_DIR}/build/lib"
     cp -r "${ABSOLUTE_DIR}/boost_${TRAVIS_BOOST_VERSION2}/boost" "${ABSOLUTE_DIR}/build/include/"
 
