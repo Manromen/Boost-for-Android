@@ -32,7 +32,7 @@ function build()
 {
     cd "${ABSOLUTE_DIR}"
 
-    ./build-android.sh --boost=${TRAVIS_BOOST_VERSION} ${TRAVIS_BUILD_DIR}/android-ndk-${TRAVIS_ANDROID_NDK_VERSION}
+    ./build-android.sh --boost=${TRAVIS_BOOST_VERSION} --arch=${TRAVIS_ANDROID_ARCH} ${TRAVIS_BUILD_DIR}/android-ndk-${TRAVIS_ANDROID_NDK_VERSION}
 }
 
 #=======================================================================================================================
@@ -49,20 +49,16 @@ function restructureOutput()
     # goto created library files and iterate over all architectures
     cd "${ABSOLUTE_DIR}/build/out"
 
-    for folder in *; do
-        echo "folder: $folder"
+    rm -r "${ABSOLUTE_DIR}/build/out/${TRAVIS_ANDROID_ARCH}/include"
+    
+    cd "${ABSOLUTE_DIR}/build/out/${TRAVIS_ANDROID_ARCH}/lib"
 
-        rm -r "${ABSOLUTE_DIR}/build/out/${folder}/include"
-        
-        cd "${ABSOLUTE_DIR}/build/out/${folder}/lib"
-
-        for file in *.a; do
-            mv $file "../${file%%-*}.a"
-        done
-
-        rm -r "${ABSOLUTE_DIR}/build/out/${folder}/lib"
-        mv "${ABSOLUTE_DIR}/build/out/${folder}" "${ABSOLUTE_DIR}/build/lib/"
+    for file in *.a; do
+        mv $file "../${file%%-*}.a"
     done
+
+    rm -r "${ABSOLUTE_DIR}/build/out/${TRAVIS_ANDROID_ARCH}/lib"
+    mv "${ABSOLUTE_DIR}/build/out/${TRAVIS_ANDROID_ARCH}" "${ABSOLUTE_DIR}/build/lib/"
 
     cd "${ABSOLUTE_DIR}"
 }

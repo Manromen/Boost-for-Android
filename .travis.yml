@@ -29,41 +29,45 @@ before_install:
 matrix:
   include:
 
-    # Boost 1.68.0 with NDK r16b
-    - os: linux
-      env:
-        - TRAVIS_ANDROID_NDK_VERSION=r16b
-        - TRAVIS_BOOST_VERSION=1.68.0
-      addons:
-      apt:
-        sources: ['ubuntu-toolchain-r-test']
-        packages: ['g++-5' ]
-
-    # Boost 1.68.0 with NDK r17b
-    - os: linux
-      env:
-        - TRAVIS_ANDROID_NDK_VERSION=r17b
-        - TRAVIS_BOOST_VERSION=1.68.0
-      addons:
-      apt:
-        sources: ['ubuntu-toolchain-r-test']
-        packages: ['g++-5' ]
-    
-    # Boost 1.68.0 with NDK r17c
-    - os: linux
-      env:
-        - TRAVIS_ANDROID_NDK_VERSION=r17c
-        - TRAVIS_BOOST_VERSION=1.68.0
-      addons:
-      apt:
-        sources: ['ubuntu-toolchain-r-test']
-        packages: ['g++-5' ]
-
-    # Boost 1.68.0 with NDK r18
+    # Boost 1.68.0 / NDK r18 / arm64-v8a
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18
         - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_ANDROID_ARCH=arm64-v8a
+      addons:
+      apt:
+        sources: ['ubuntu-toolchain-r-test']
+        packages: ['g++-5' ]
+
+    # Boost 1.68.0 / NDK r18 / armeabi-v7a
+    - os: linux
+      env:
+        - TRAVIS_ANDROID_NDK_VERSION=r18
+        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_ANDROID_ARCH=armeabi-v7a
+      addons:
+      apt:
+        sources: ['ubuntu-toolchain-r-test']
+        packages: ['g++-5' ]
+
+    # Boost 1.68.0 / NDK r18 / x86
+    - os: linux
+      env:
+        - TRAVIS_ANDROID_NDK_VERSION=r18
+        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_ANDROID_ARCH=x86
+      addons:
+      apt:
+        sources: ['ubuntu-toolchain-r-test']
+        packages: ['g++-5' ]
+
+    # Boost 1.68.0 / NDK r18 / x86_64
+    - os: linux
+      env:
+        - TRAVIS_ANDROID_NDK_VERSION=r18
+        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_ANDROID_ARCH=x86_64
       addons:
       apt:
         sources: ['ubuntu-toolchain-r-test']
@@ -79,13 +83,11 @@ script:
 
   # zip result
   - cd "${TRAVIS_BUILD_DIR}/build"
-  - zip -r "${TRAVIS_BUILD_DIR}/boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_BOOST_VERSION}.zip" include lib
+  - zip -r "${TRAVIS_BUILD_DIR}/boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_ANDROID_ARCH}-${TRAVIS_BOOST_VERSION}.zip" include lib
 
 deploy:
   provider: releases
   api_key:
-    secure: "PX+2uNPt8gLzs6uMek9ycsKjezQy5Da2rJSMPwZv6SiDt3yQU4LDp/K3VKVhV4y8Uks3FtUati1kYsdz6mzaalUV6mSkFZ+wHa6YR9fWxBYndtiiAuApHX3A3rsbO6j5r0dkG7auKt1iRLZwgE+U/rDNv55j94QEb2Ey7Nvx9Bwcdursin5iO3jleLApGoqOl7cDgVf0V1TylA6H5pdr26cSHDOK5XKwix4zlQ4Bk5gtJ9zT7uEWh+JZQgTUr1t7Q8Dx0KK+Cdce/Kf+qearHJZp/qBhnkp7HMMOjC7qUfU/dr97LZeVpZ6OCsiVS+oj1YzsyGGEiJV9YhnLZa6n+gRctlLbOBFtWKEKbCGXkwWS46aDV10Crziog8hna8UuK7YJ2tTVHV7W/fXQNP9txV5JGH1dvw5/DQebYwB9VTFi34u8k43yQDPgdpTjI7slGaBxNI5hRRE+sRrT9bt/CNx7ARw6V6BbQxIEDbebno/sb+eqd8wiTFEo4J+FvwL7u89oQIni0slu+vZuHeQPLPOu8nOyv61dBVOGZnjSOS8Yz/wRBLx4o1chnLMjciR2pRk3nDE5c+b38YYT6hob/dfaS6Cz0lwqImKK+Y0rLaVuG4nKH4ASm+eKLwdx5aM+vSOKwxpXrLGY79/nhioLh9RYO8xndobzn4PSFYjye9o="
-  file: "boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_BOOST_VERSION}.zip"
+    secure: "HPlnsQBwMLPKeFFytOHsF/kbY7BpBVZQ/t1G2nmVfZJ5CNzTRRERvzIyENLvVJrNjjFCiZPt0HydBQ5LWAG+qxztzjBsnDwNuWZtDQMBfjsN9yWLBGPGa19G8JavgG7YhvnpHfx1RPPI7VYQlHyIl0eo9OE4Z7wvcg94Ik9zNH4EOn99O7DzMw5c/iJ1uVKuXH7DzUiufUtHw1JnwO8bXM5w1C/tgdq8wtwJ1RflOG0GMmwFFR2B5jxTpD0GfktdPmlCQlekd2NV/WklCu718LQk55tvmsZcC90C64sHvjMR8tGJKcSh9pmkqmY5PWdy51JNqAwVg7WdvkDPFLyj2faO8qeTxT0zohsWn/shwi9GNYh9/W97A3Y04+5vBjp+JSf/ZV6ymdWZ6f5h0XfhKZGeA18jt2f7G35mwJl4oT2tQPRSaUxWgYAkqW7kNzyAOaCyGI1pyAuUrGVJHN4Tzwo9r2TCRqOWlgInDOYjIyT/yt21joxyRNGQznkUErlejcG91DcHqEf+yM5ldtZRARowcArb5brN3UPk5UQDqNqGfyveHuyXiqjNk7VWlyx3YuyPs1e/fklWyk8BK+Ncn9t8v9fHIZPMtOaLaOzsLpz7kv/LhxAfz2hJIReU2z6o2cC4+0w3XCIVKfc2YDhhjSGH7ziS4mF/jIdNgvDBsUs="
+  file: "boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_ANDROID_ARCH}-${TRAVIS_BOOST_VERSION}.zip"
   skip_cleanup: true
-  on:
-    branch: travis
