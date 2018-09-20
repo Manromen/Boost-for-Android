@@ -86,13 +86,17 @@ script:
 
   # zip result
   - cd "${TRAVIS_BUILD_DIR}/build"
+  - ls -la
   - zip -r "${TRAVIS_BUILD_DIR}/boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_ANDROID_ARCH}-${TRAVIS_BOOST_VERSION}.zip" include lib
+  - cd "${TRAVIS_BUILD_DIR}"
+  - ls -la
 
 deploy:
   provider: releases
   api_key:
     secure: "HPlnsQBwMLPKeFFytOHsF/kbY7BpBVZQ/t1G2nmVfZJ5CNzTRRERvzIyENLvVJrNjjFCiZPt0HydBQ5LWAG+qxztzjBsnDwNuWZtDQMBfjsN9yWLBGPGa19G8JavgG7YhvnpHfx1RPPI7VYQlHyIl0eo9OE4Z7wvcg94Ik9zNH4EOn99O7DzMw5c/iJ1uVKuXH7DzUiufUtHw1JnwO8bXM5w1C/tgdq8wtwJ1RflOG0GMmwFFR2B5jxTpD0GfktdPmlCQlekd2NV/WklCu718LQk55tvmsZcC90C64sHvjMR8tGJKcSh9pmkqmY5PWdy51JNqAwVg7WdvkDPFLyj2faO8qeTxT0zohsWn/shwi9GNYh9/W97A3Y04+5vBjp+JSf/ZV6ymdWZ6f5h0XfhKZGeA18jt2f7G35mwJl4oT2tQPRSaUxWgYAkqW7kNzyAOaCyGI1pyAuUrGVJHN4Tzwo9r2TCRqOWlgInDOYjIyT/yt21joxyRNGQznkUErlejcG91DcHqEf+yM5ldtZRARowcArb5brN3UPk5UQDqNqGfyveHuyXiqjNk7VWlyx3YuyPs1e/fklWyk8BK+Ncn9t8v9fHIZPMtOaLaOzsLpz7kv/LhxAfz2hJIReU2z6o2cC4+0w3XCIVKfc2YDhhjSGH7ziS4mF/jIdNgvDBsUs="
-  file: "boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_ANDROID_ARCH}-${TRAVIS_BOOST_VERSION}.zip"
+  file_glob: true
+  file: "boost-android-*.zip"
   skip_cleanup: true
   on:
     branch: travis
