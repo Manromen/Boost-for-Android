@@ -28,12 +28,12 @@ before_install:
 matrix:
   include:
 
-    ### Boost 1.68.0 - NDK r18b ###
+    ### Boost 1.69.0 - NDK r18b ###
     # arm64-v8a
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=arm64-v8a
       addons:
       apt:
@@ -44,7 +44,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=armeabi-v7a
       addons:
       apt:
@@ -55,7 +55,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86
       addons:
       apt:
@@ -66,19 +66,19 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86_64
       addons:
       apt:
         sources: ['ubuntu-toolchain-r-test']
         packages: ['g++-5' ]
 
-    ### Boost 1.68.0 - NDK r18 ###
+    ### Boost 1.69.0 - NDK r18 ###
     # arm64-v8a
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=arm64-v8a
       addons:
       apt:
@@ -89,7 +89,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=armeabi-v7a
       addons:
       apt:
@@ -100,7 +100,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86
       addons:
       apt:
@@ -111,19 +111,19 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r18
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86_64
       addons:
       apt:
         sources: ['ubuntu-toolchain-r-test']
         packages: ['g++-5' ]
 
-    ### Boost 1.68.0 - NDK r17c ###
+    ### Boost 1.69.0 - NDK r17c ###
     # arm64-v8a
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r17c
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=arm64-v8a
       addons:
       apt:
@@ -134,7 +134,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r17c
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=armeabi-v7a
       addons:
       apt:
@@ -145,7 +145,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r17c
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86
       addons:
       apt:
@@ -156,19 +156,19 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r17c
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86_64
       addons:
       apt:
         sources: ['ubuntu-toolchain-r-test']
         packages: ['g++-5' ]
 
-    ### Boost 1.68.0 - NDK r17b ###
+    ### Boost 1.69.0 - NDK r17b ###
     # arm64-v8a
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r17b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=arm64-v8a
       addons:
       apt:
@@ -179,7 +179,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r17b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=armeabi-v7a
       addons:
       apt:
@@ -190,7 +190,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r17b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86
       addons:
       apt:
@@ -201,19 +201,19 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r17b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86_64
       addons:
       apt:
         sources: ['ubuntu-toolchain-r-test']
         packages: ['g++-5' ]
 
-    ### Boost 1.68.0 - NDK r16b ###
+    ### Boost 1.69.0 - NDK r16b ###
     # arm64-v8a
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r16b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=arm64-v8a
       addons:
       apt:
@@ -224,7 +224,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r16b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=armeabi-v7a
       addons:
       apt:
@@ -235,7 +235,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r16b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86
       addons:
       apt:
@@ -246,7 +246,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r16b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=x86_64
       addons:
       apt:
@@ -257,7 +257,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r16b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=armeabi
       addons:
       apt:
@@ -268,7 +268,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r16b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=mips
       addons:
       apt:
@@ -279,7 +279,7 @@ matrix:
     - os: linux
       env:
         - TRAVIS_ANDROID_NDK_VERSION=r16b
-        - TRAVIS_BOOST_VERSION=1.68.0
+        - TRAVIS_BOOST_VERSION=1.69.0
         - TRAVIS_ANDROID_ARCH=mips64
       addons:
       apt:
@@ -296,7 +296,7 @@ script:
 
   # zip result
   - cd "${TRAVIS_BUILD_DIR}/build"
-  - zip -r "${TRAVIS_BUILD_DIR}/boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_ANDROID_ARCH}-${TRAVIS_BOOST_VERSION}.zip" include lib
+  - zip -qr "${TRAVIS_BUILD_DIR}/boost-android-${TRAVIS_ANDROID_NDK_VERSION}-${TRAVIS_ANDROID_ARCH}-${TRAVIS_BOOST_VERSION}.zip" include lib
   - cd "${TRAVIS_BUILD_DIR}"
 
 deploy:
