@@ -1,26 +1,26 @@
-diff -u -r boost_1_69_0.orig/boost/asio/detail/config.hpp boost_1_69_0/boost/asio/detail/config.hpp
---- boost_1_69_0.orig/boost/asio/detail/config.hpp	2018-12-05 20:58:15.000000000 +0100
-+++ boost_1_69_0/boost/asio/detail/config.hpp	2018-12-13 14:52:06.000000000 +0100
-@@ -815,7 +815,11 @@
+diff -u -r boost_1_72_0.orig/boost/asio/detail/config.hpp boost_1_72_0/boost/asio/detail/config.hpp
+--- boost_1_72_0.orig/boost/asio/detail/config.hpp	2019-12-10 01:18:31.000000000 +0100
++++ boost_1_72_0/boost/asio/detail/config.hpp	2020-03-05 11:03:23.000000000 +0100
+@@ -861,7 +861,11 @@
  #    if (_LIBCPP_VERSION < 7000)
  #     if (__cplusplus >= 201402)
  #      if __has_include(<experimental/string_view>)
 -#       define BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW 1
-+#     if __clang_major__ >= 7
-+#      undef BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW
-+#     else
-+#      define BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW 1
-+#     endif // __clang_major__ >= 7
++#       if __clang_major__ >= 7
++#        undef BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW
++#       else
++#        define BOOST_ASIO_HAS_STD_EXPERIMENTAL_STRING_VIEW 1
++#       endif // __clang_major__ >= 7
  #      endif // __has_include(<experimental/string_view>)
  #     endif // (__cplusplus >= 201402)
  #    endif // (_LIBCPP_VERSION < 7000)
-diff -u -r boost_1_69_0.orig/boost/config/user.hpp boost_1_69_0/boost/config/user.hpp
---- boost_1_69_0.orig/boost/config/user.hpp	2018-12-05 20:58:16.000000000 +0100
-+++ boost_1_69_0/boost/config/user.hpp	2018-12-13 14:35:29.000000000 +0100
+diff -u -r boost_1_72_0.orig/boost/config/user.hpp boost_1_72_0/boost/config/user.hpp
+--- boost_1_72_0.orig/boost/config/user.hpp	2019-12-10 01:18:43.000000000 +0100
++++ boost_1_72_0/boost/config/user.hpp	2020-03-05 11:04:31.000000000 +0100
 @@ -13,6 +13,12 @@
  //  configuration policy:
  //
-
+ 
 +// Android defines
 +// There is problem with std::atomic on android (and some other platforms).
 +// See this link for more info:
@@ -29,10 +29,10 @@ diff -u -r boost_1_69_0.orig/boost/config/user.hpp boost_1_69_0/boost/config/use
 +
  // define this to locate a compiler config file:
  // #define BOOST_COMPILER_CONFIG <myheader>
-
-diff -u -r boost_1_69_0.orig/boost/system/error_code.hpp boost_1_69_0/boost/system/error_code.hpp
---- boost_1_69_0.orig/boost/system/error_code.hpp	2018-12-05 20:58:23.000000000 +0100
-+++ boost_1_69_0/boost/system/error_code.hpp	2018-12-13 14:53:33.000000000 +0100
+ 
+diff -u -r boost_1_72_0.orig/boost/system/error_code.hpp boost_1_72_0/boost/system/error_code.hpp
+--- boost_1_72_0.orig/boost/system/error_code.hpp	2019-12-10 01:19:59.000000000 +0100
++++ boost_1_72_0/boost/system/error_code.hpp	2020-03-05 11:05:32.000000000 +0100
 @@ -14,6 +14,7 @@
  #include <boost/system/detail/config.hpp>
  #include <boost/cstdint.hpp>
@@ -41,13 +41,13 @@ diff -u -r boost_1_69_0.orig/boost/system/error_code.hpp boost_1_69_0/boost/syst
  #include <ostream>
  #include <string>
  #include <functional>
-diff -u -r boost_1_69_0.orig/libs/filesystem/src/operations.cpp boost_1_69_0/libs/filesystem/src/operations.cpp
---- boost_1_69_0.orig/libs/filesystem/src/operations.cpp	2018-12-05 20:58:17.000000000 +0100
-+++ boost_1_69_0/libs/filesystem/src/operations.cpp	2018-12-13 14:55:41.000000000 +0100
-@@ -232,6 +232,21 @@
-
+diff -u -r boost_1_72_0.orig/libs/filesystem/src/operations.cpp boost_1_72_0/libs/filesystem/src/operations.cpp
+--- boost_1_72_0.orig/libs/filesystem/src/operations.cpp	2019-12-10 01:18:53.000000000 +0100
++++ boost_1_72_0/libs/filesystem/src/operations.cpp	2020-03-05 11:09:55.000000000 +0100
+@@ -221,6 +221,21 @@
+ 
  # if defined(BOOST_POSIX_API)
-
+ 
 +#  if defined(__ANDROID__)
 +#  define truncate libboost_truncate_wrapper
 +// truncate() is present in Android libc only starting from ABI 21, so here's a simple wrapper
@@ -61,15 +61,15 @@ diff -u -r boost_1_69_0.orig/libs/filesystem/src/operations.cpp boost_1_69_0/lib
 +  close(fd);
 +  return status;
 +}
-+#  endif
++#  endif // defined(__ANDROID__)
 +
- typedef int err_t;
-
- //  POSIX uses a 0 return to indicate success
-diff -u -r boost_1_69_0.orig/libs/filesystem/src/path.cpp boost_1_69_0/libs/filesystem/src/path.cpp
---- boost_1_69_0.orig/libs/filesystem/src/path.cpp	2019-06-11 08:43:27.922127113 +0200
-+++ boost_1_69_0/libs/filesystem/src/path.cpp	2019-06-11 08:47:45.972182953 +0200
-@@ -37,7 +37,8 @@
+ #   define BOOST_SET_CURRENT_DIRECTORY(P)(::chdir(P)== 0)
+ #   define BOOST_CREATE_DIRECTORY(P)(::mkdir(P, S_IRWXU|S_IRWXG|S_IRWXO)== 0)
+ #   define BOOST_CREATE_HARD_LINK(F,T)(::link(T, F)== 0)
+diff -u -r boost_1_72_0.orig/libs/filesystem/src/path.cpp boost_1_72_0/libs/filesystem/src/path.cpp
+--- boost_1_72_0.orig/libs/filesystem/src/path.cpp	2019-12-10 01:18:53.000000000 +0100
++++ boost_1_72_0/libs/filesystem/src/path.cpp	2020-03-05 11:11:43.000000000 +0100
+@@ -41,7 +41,8 @@
  # include "windows_file_codecvt.hpp"
  # include <windows.h>
  #elif defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__) \
@@ -79,7 +79,7 @@ diff -u -r boost_1_69_0.orig/libs/filesystem/src/path.cpp boost_1_69_0/libs/file
  # include <boost/filesystem/detail/utf8_codecvt_facet.hpp>
  #endif
  
-@@ -869,7 +870,8 @@
+@@ -874,7 +875,8 @@
      std::locale global_loc = std::locale();
      return std::locale(global_loc, new windows_file_codecvt);
  # elif defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__) \
@@ -89,18 +89,18 @@ diff -u -r boost_1_69_0.orig/libs/filesystem/src/path.cpp boost_1_69_0/libs/file
      // "All BSD system functions expect their string parameters to be in UTF-8 encoding
      // and nothing else." See
      // http://developer.apple.com/mac/library/documentation/MacOSX/Conceptual/BPInternational/Articles/FileEncodings.html
-diff -u -r boost_1_69_0.orig/tools/build/src/tools/common.jam boost_1_69_0/tools/build/src/tools/common.jam
---- boost_1_69_0.orig/tools/build/src/tools/common.jam	2019-01-25 23:18:34.544755629 +0200
-+++ boost_1_69_0/tools/build/src/tools/common.jam	2019-01-25 23:20:42.309047754 +0200
-@@ -976,10 +976,10 @@
+diff -u -r boost_1_72_0.orig/tools/build/src/tools/common.jam boost_1_72_0/tools/build/src/tools/common.jam
+--- boost_1_72_0.orig/tools/build/src/tools/common.jam	2019-12-10 01:20:17.000000000 +0100
++++ boost_1_72_0/tools/build/src/tools/common.jam	2020-03-05 11:13:31.000000000 +0100
+@@ -980,10 +980,10 @@
      }
  
      # Ditto, from Clang 4
--    if $(tag) in clang clangw && [ numbers.less 3 $(version[1]) ]
+-    if ( $(tag) = clang || $(tag) = clangw ) && $(version[1]) && [ numbers.less 3 $(version[1]) ]
 -    {
 -        version = $(version[1]) ;
 -    }
-+    #if $(tag) in clang clangw && [ numbers.less 3 $(version[1]) ]
++    #if ( $(tag) = clang || $(tag) = clangw ) && $(version[1]) && [ numbers.less 3 $(version[1]) ]
 +    #{
 +    #    version = $(version[1]) ;
 +    #}
